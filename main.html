@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Firstname Lastname – E-portfolio</title>
+<meta name="description" content="E-portfolio of Firstname Lastname, engineering student at Toulouse INP-ENSEEIHT (N7), Digital Sciences.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1b2a41;
+    --muted: #5b6b80;
+    --blue: #2f5d8a;
+    --blue-soft: #e4edf6;
+    --bg: #f6f8fb;
+    --card: #ffffff;
+    --line: #d9e1ea;
+    --accent: #e0a030;
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+    line-height: 1.65; font-size: 17px;
+  }
+  a { color: var(--blue); }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  img { max-width: 100%; }
+
+  /* Header */
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(255,255,255,.95); backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav { max-width: 1040px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 58px; }
+  .logo { font-weight: 800; text-decoration: none; color: var(--ink); white-space: nowrap; }
+  .nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 4px; overflow-x: auto; }
+  .nav ul a { display: block; padding: 6px 12px; border-radius: 8px; text-decoration: none; color: var(--muted); font-weight: 500; font-size: 15px; white-space: nowrap; }
+  .nav ul a:hover { background: var(--blue-soft); color: var(--blue); }
+
+  /* Layout */
+  section { padding: 84px 20px; }
+  .wrap { max-width: 1040px; margin: 0 auto; }
+  h2 { font-size: 2rem; line-height: 1.2; margin: 0 0 8px; letter-spacing: -.01em; }
+  h2::after { content: ""; display: block; width: 48px; height: 4px; background: var(--accent); border-radius: 2px; margin-top: 12px; }
+  .lead { color: var(--muted); margin: 0 0 36px; max-width: 60ch; }
+  h3 { margin: 0 0 4px; font-size: 1.1rem; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+  .grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+  .meta { color: var(--muted); font-size: .92rem; margin: 0 0 10px; }
+
+  /* Hero */
+  #home { background: var(--ink); color: #fff; padding: 110px 20px 100px; }
+  .hero { max-width: 1040px; margin: 0 auto; display: grid; gap: 48px; grid-template-columns: 1fr 280px; align-items: center; }
+  .hero h1 { font-size: clamp(2.4rem, 6vw, 3.8rem); line-height: 1.05; margin: 0 0 16px; letter-spacing: -.02em; font-weight: 800; }
+  .hero p { margin: 0 0 8px; font-size: 1.2rem; color: #cfdbea; max-width: 40ch; }
+  .hero .school { color: var(--accent); font-weight: 700; }
+  .photo {
+    width: 260px; height: 260px; border-radius: 50%; background: #2c4263 center/cover;
+    border: 4px solid var(--accent); display: grid; place-items: center; color: #9db3cf; font-size: .9rem; text-align: center; justify-self: center;
+  }
+  .btns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .btn { display: inline-block; padding: 12px 22px; border-radius: 10px; font-weight: 700; text-decoration: none; font-size: 1rem; }
+  .btn-primary { background: var(--accent); color: var(--ink); }
+  .btn-primary:hover { background: #f0b445; }
+  .btn-ghost { border: 2px solid #5d7799; color: #fff; }
+  .btn-ghost:hover { border-color: #fff; }
+
+  /* Skills */
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; padding: 0; list-style: none; }
+  .tags li { background: var(--blue-soft); color: var(--blue); padding: 4px 12px; border-radius: 999px; font-size: .9rem; font-weight: 500; }
+
+  /* Projects */
+  .project h3 { font-size: 1.2rem; }
+  .project p { margin: 0 0 14px; }
+  .docs { list-style: none; margin: 14px 0 0; padding: 14px 0 0; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 8px 16px; }
+  .docs a { font-weight: 500; font-size: .95rem; text-decoration: none; }
+  .docs a:hover { text-decoration: underline; }
+  .docs a::before { content: "📄 "; }
+
+  /* Timeline */
+  .timeline { position: relative; margin: 0; padding: 0 0 0 28px; list-style: none; border-left: 3px solid var(--line); }
+  .timeline li { position: relative; margin-bottom: 28px; }
+  .timeline li::before { content: ""; position: absolute; left: -38px; top: 6px; width: 15px; height: 15px; border-radius: 50%; background: var(--card); border: 4px solid var(--blue); }
+  .timeline .date { color: var(--blue); font-weight: 700; font-size: .92rem; }
+  .two-col { display: grid; gap: 48px; grid-template-columns: 1fr 1fr; }
+  .two-col h3 { font-size: 1.35rem; margin-bottom: 24px; }
+
+  /* Mobility */
+  .mobility .place { display: inline-block; background: var(--blue-soft); color: var(--blue); font-weight: 700; font-size: .85rem; padding: 3px 10px; border-radius: 6px; margin-bottom: 10px; }
+
+  /* Video */
+  .video { aspect-ratio: 16 / 9; width: 100%; max-width: 860px; border-radius: var(--radius); overflow: hidden; background: #2c4263; display: grid; place-items: center; color: #cfdbea; text-align: center; padding: 20px; }
+  .video iframe, .video video { width: 100%; height: 100%; border: 0; }
+
+  /* Contact */
+  #contact { background: #fff; border-top: 1px solid var(--line); }
+  .contact-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .contact-list li { background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; }
+  .contact-list strong { display: block; margin-bottom: 4px; }
+  footer { text-align: center; padding: 24px 20px; color: var(--muted); font-size: .9rem; }
+
+  @media (max-width: 760px) {
+    .hero { grid-template-columns: 1fr; }
+    .photo { order: -1; width: 180px; height: 180px; justify-self: start; }
+    .two-col { grid-template-columns: 1fr; gap: 32px; }
+    section { padding: 64px 20px; }
+    .logo { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header>
+  <nav class="nav" aria-label="Main navigation">
+    <a class="logo" href="#home">F. Lastname</a>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education &amp; Career</a></li>
+      <li><a href="#mobility">Mobility</a></li>
+      <li><a href="#video">Video</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+
+<!-- ============ HOME ============ -->
+<section id="home">
+  <div class="hero">
+    <div>
+      <h1>Firstname<br>Lastname</h1>
+      <p>Engineering student in Digital Sciences</p>
+      <p class="school">Toulouse INP – ENSEEIHT (N7)</p>
+      <div class="btns">
+        <!-- TODO: put your CV in the folder "files" and name it cv.pdf -->
+        <a class="btn btn-primary" href="files/cv.pdf" download>Download my CV</a>
+        <a class="btn btn-ghost" href="#contact">Contact me</a>
+      </div>
+    </div>
+    <!-- TODO: replace with your photo: style="background-image:url('images/me.jpg')" and remove the text -->
+    <div class="photo" role="img" aria-label="Portrait of Firstname Lastname">Your photo<br>(images/me.jpg)</div>
+  </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section id="skills">
+  <div class="wrap">
+    <h2>Skills</h2>
+    <p class="lead">A short sentence summarising what you do best. Replace this text.</p>
+    <!-- TODO: edit, add or remove categories and tags -->
+    <div class="grid">
+      <article class="card">
+        <h3>Programming</h3>
+        <ul class="tags"><li>Python</li><li>C</li><li>Java</li><li>Skill 4</li></ul>
+      </article>
+      <article class="card">
+        <h3>Data &amp; AI</h3>
+        <ul class="tags"><li>Machine learning</li><li>Data analysis</li><li>Skill 3</li></ul>
+      </article>
+      <article class="card">
+        <h3>Networks &amp; Systems</h3>
+        <ul class="tags"><li>Linux</li><li>Networking</li><li>Skill 3</li></ul>
+      </article>
+      <article class="card">
+        <h3>Tools</h3>
+        <ul class="tags"><li>Git</li><li>Docker</li><li>LaTeX</li><li>Skill 4</li></ul>
+      </article>
+      <article class="card">
+        <h3>Languages</h3>
+        <ul class="tags"><li>French – native</li><li>English – level</li><li>Language 3 – level</li></ul>
+      </article>
+      <article class="card">
+        <h3>Soft skills</h3>
+        <ul class="tags"><li>Teamwork</li><li>Project management</li><li>Skill 3</li></ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section id="projects" style="background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <h2>Projects</h2>
+    <p class="lead">A selection of projects I have worked on, with the related documents to download.</p>
+    <div class="grid">
+
+      <!-- TODO: copy this whole <article> block to add a project. Remove the <li> of documents you don't have. -->
+      <article class="card project">
+        <h3>Project title 1</h3>
+        <p class="meta">Academic year · Team project / Solo · Technologies used</p>
+        <p>Describe the project in 2–3 sentences: the goal, your role, and the result.</p>
+        <ul class="docs">
+          <li><a href="files/project1-report.pdf" download>Report</a></li>
+          <li><a href="files/project1-slides.pdf" download>Presentation slides</a></li>
+          <li><a href="https://github.com/your-username/your-repo" target="_blank" rel="noopener">Source code</a></li>
+        </ul>
+      </article>
+
+      <article class="card project">
+        <h3>Project title 2</h3>
+        <p class="meta">Academic year · Team project / Solo · Technologies used</p>
+        <p>Describe the project in 2–3 sentences: the goal, your role, and the result.</p>
+        <ul class="docs">
+          <li><a href="files/project2-report.pdf" download>Report</a></li>
+          <li><a href="files/project2-slides.pdf" download>Presentation slides</a></li>
+        </ul>
+      </article>
+
+      <article class="card project">
+        <h3>Project title 3</h3>
+        <p class="meta">Academic year · Team project / Solo · Technologies used</p>
+        <p>Describe the project in 2–3 sentences: the goal, your role, and the result.</p>
+        <ul class="docs">
+          <li><a href="files/project3-report.pdf" download>Report</a></li>
+        </ul>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ EDUCATION & CAREER ============ -->
+<section id="education">
+  <div class="wrap">
+    <h2>Education &amp; Career</h2>
+    <p class="lead">My academic path and professional experience, most recent first.</p>
+    <div class="two-col">
+
+      <div>
+        <h3>Education</h3>
+        <ul class="timeline">
+          <!-- TODO: copy a <li> to add a step -->
+          <li>
+            <span class="date">2023 – present</span>
+            <h3>Engineering degree, Digital Sciences</h3>
+            <p class="meta">Toulouse INP – ENSEEIHT, Toulouse</p>
+            <p>Short description: main courses, specialisation, etc.</p>
+          </li>
+          <li>
+            <span class="date">20XX – 2023</span>
+            <h3>Preparatory classes / Bachelor</h3>
+            <p class="meta">School name, City</p>
+            <p>Short description.</p>
+          </li>
+          <li>
+            <span class="date">20XX</span>
+            <h3>High school diploma</h3>
+            <p class="meta">School name, City</p>
+            <p>Major, honours, etc.</p>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Career</h3>
+        <ul class="timeline">
+          <li>
+            <span class="date">Month 20XX – Month 20XX</span>
+            <h3>Internship title</h3>
+            <p class="meta">Company name, City</p>
+            <p>What you did and what you learned.</p>
+          </li>
+          <li>
+            <span class="date">Month 20XX – Month 20XX</span>
+            <h3>Job / Volunteering title</h3>
+            <p class="meta">Organisation name, City</p>
+            <p>What you did and what you learned.</p>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ MOBILITY ============ -->
+<section id="mobility" style="background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <h2>International mobility</h2>
+    <p class="lead">My three experiences abroad.</p>
+    <div class="grid mobility">
+
+      <article class="card">
+        <span class="place">Country, City</span>
+        <h3>Mobility 1 – Title</h3>
+        <p class="meta">Month 20XX – Month 20XX · Type (study, internship, exchange…)</p>
+        <p>What you did there, what you discovered, what it brought you.</p>
+      </article>
+
+      <article class="card">
+        <span class="place">Country, City</span>
+        <h3>Mobility 2 – Title</h3>
+        <p class="meta">Month 20XX – Month 20XX · Type</p>
+        <p>What you did there, what you discovered, what it brought you.</p>
+      </article>
+
+      <article class="card">
+        <span class="place">Country, City</span>
+        <h3>Mobility 3 – Title</h3>
+        <p class="meta">Month 20XX – Month 20XX · Type</p>
+        <p>What you did there, what you discovered, what it brought you.</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ VIDEO ============ -->
+<section id="video">
+  <div class="wrap">
+    <h2>Presentation video</h2>
+    <p class="lead">A short video to introduce myself.</p>
+
+    <!-- OPTION A (recommended): YouTube. Replace VIDEO_ID, then delete the placeholder div below. -->
+    <!--
+    <div class="video">
+      <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="Presentation video" allowfullscreen loading="lazy"></iframe>
+    </div>
+    -->
+
+    <!-- OPTION B: video file in the folder "files" (keep it under ~50 MB). Delete the placeholder div below. -->
+    <!--
+    <div class="video">
+      <video controls preload="metadata" poster="images/video-poster.jpg">
+        <source src="files/presentation.mp4" type="video/mp4">
+      </video>
+    </div>
+    -->
+
+    <div class="video">Your presentation video will appear here.<br>See the comments in the HTML code.</div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <div class="wrap">
+    <h2>Contact</h2>
+    <p class="lead">Feel free to get in touch.</p>
+    <ul class="contact-list">
+      <li><strong>Phone</strong><a href="tel:+33600000000">+33 6 00 00 00 00</a></li>
+      <li><strong>Email</strong><a href="mailto:firstname.lastname@etu.toulouse-inp.fr">firstname.lastname@etu.toulouse-inp.fr</a></li>
+      <li><strong>LinkedIn</strong><a href="https://www.linkedin.com/in/your-profile" target="_blank" rel="noopener">linkedin.com/in/your-profile</a></li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer>© 2026 Firstname Lastname – E-portfolio</footer>
+
+</body>
+</html>
